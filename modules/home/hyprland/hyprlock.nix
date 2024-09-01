@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   home.packages = [ pkgs.hyprlock ];
   xdg.configFile."hypr/hyprlock.conf".text = ''
@@ -63,7 +63,7 @@
 
     image {
       monitor =
-      path = ~/Pictures/pp/pp.png
+      path = ${config.home.homeDirectory}/Pictures/avatar/1.jpg
       size = 125
       border_color = $accent
 

@@ -1,6 +1,19 @@
 { pkgs, config, ... }:
 {
-  # fonts.fontconfig.enable = true; # fcitx5 may fail to display emoji
+  # fonts.fontconfig.enable = true;
+  home.packages = with pkgs; [
+    (nerdfonts.override {
+      fonts = [
+        "NerdFontsSymbolsOnly"
+        "Noto"
+        "FiraCode"
+        "JetBrainsMono"
+      ];
+    })
+    # twemoji-color-font
+    noto-fonts-color-emoji
+  ];
+
   gtk = {
     enable = true;
     # font = {

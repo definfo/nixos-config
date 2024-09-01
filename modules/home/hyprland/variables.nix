@@ -20,6 +20,18 @@
     # XCURSOR_THEME = "Nordzy-cursors"; # managed by gtk.nix
     # XCURSOR_SIZE = "22"; # managed by gtk.nix
 
+    # Nvidia GBM Backend
+    GBM_BACKEND = "nvidia-drm"; # maybe incompatible with firefox
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    # Sync
+    __GL_GSYNC_ALLOWED = "0"; # G-Sync
+    # __GL_SYNC_TO_VBLANK = "0"; # V-Sync
+    __GL_VRR_ALLOWED = "0"; # Adaptive Sync
+
+    # Hardware acceleration
+    LIBVA_DRIVER_NAME = "nvidia"; # Nvidia VA-API
+    # LIBVA_DRIVER_NAME = "iHD"; # Intel VA-API
+
     # wlroots 
     # WLR_DRM_NO_ATOMIC = "1"; # Not recommended if kernel version >= 6.8
     WLR_BACKEND = "vulkan";
@@ -27,9 +39,10 @@
     # WLR_NO_HARDWARE_CURSORS = "1"; # deprecated, use cursor:no_hardware_cursors instead
 
     # Firefox
-    MOZ_ENABLE_WAYLAND = "1";
-    MOZ_USE_XINPUT2 = "1";
-    MOZ_DBUS_REMOTE = "1";
+    # Ref: https://wiki.archlinux.org/title/Firefox/Tweaks
+    MOZ_ENABLE_WAYLAND = "1"; # Enable wayland
+    MOZ_USE_XINPUT2 = "1"; # Enable one-to-one trackpad scrolling
+    MOZ_DBUS_REMOTE = "1"; # Enable exclusive use of DBUS remote;
 
     # Misc
     XDG_SESSION_TYPE = "wayland";

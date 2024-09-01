@@ -18,6 +18,10 @@ in
         tridactyl-native # Tridactyl native connector
       ];
     };
+    languagePacks = [
+      "zh-CN"
+      "en-US"
+    ];
     policies = {
       CaptivePortal = false;
       DisableFirefoxStudies = true;
@@ -32,6 +36,7 @@ in
         ExtensionRecommendations = false;
         SkipOnboarding = true;
       };
+      RequestedLocales = "zh-cn,en-us";
       # add policies here...
 
       # ---- EXTENSIONS ----
@@ -47,7 +52,8 @@ in
           };
         in
         listToAttrs [
-          (extension "tree-style-tab" "treestyletab@piro.sakura.ne.jp")
+          # (extension "tree-style-tab" "treestyletab@piro.sakura.ne.jp")
+          (extension "sidebery" "{3c078156-979c-498b-8990-85f7987dd929}")
           (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
           (extension "tabliss" "extension@tabliss.io")
           # (extension "umatrix" "uMatrix@raymondhill.net")
@@ -58,20 +64,17 @@ in
           (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}")
           (extension "pakkujs" "{646d57f4-d65c-4f0d-8e80-5800b92cfdaa}")
           (extension "immersive-translate" "{5efceaa7-f3a2-4e59-a54b-85319448e305}")
-
-          (extension "ublock-origin" "uBlock0@raymondhill.net")
-
-          # ? if ublock-origin fails to install due to regional restriction
-          # {
-          # name = "uBlock0@raymondhill.net";
-          # value = {
-          # install_url = "https://github.com/gorhill/uBlock/releases/download/1.58.0/uBlock0_1.58.0.firefox.signed.xpi";
-          # installation_mode = "force_installed";
-          # };
-          # }
-
           # (extension "tridactyl-vim" "tridactyl.vim@cmcaine.co.uk")
 
+          # FIXME: unavailable URL for ublock-origin
+          # (extension "ublock-origin" "uBlock0@raymondhill.net")
+          {
+            name = "uBlock0@raymondhill.net";
+            value = {
+              install_url = "https://github.com/gorhill/uBlock/releases/download/1.58.0/uBlock0_1.58.0.firefox.signed.xpi";
+              installation_mode = "force_installed";
+            };
+          }
           # tridactyl beta version without new-tab management
           # view the main help page by typing :help
           # access the tutorial with :tutor
@@ -104,39 +107,7 @@ in
             externalLists = lib.concatStringsSep "\n" importedLists;
           };
           selectedFilterLists = [
-            # "ALB-0"
-            # "BGR-0"
             "CHN-0"
-            # "CZE-0"
-            # "DEU-0"
-            # "EST-0"
-            # "FIN-0"
-            # "FRA-0"
-            # "GRC-0"
-            # "HRV-0"
-            # "HUN-0"
-            # "IDN-0"
-            # "IND-0"
-            # "IRN-0"
-            # "ISL-0"
-            # "ISR-0"
-            # "ITA-0"
-            # "JPN-1"
-            # "KOR-1"
-            # "LTU-0"
-            # "LVA-0"
-            # "MKD-0"
-            # "NLD-0"
-            # "NOR-0"
-            # "POL-0"
-            # "POL-2"
-            # "ROU-1"
-            # "RUS-0"
-            # "SVN-0"
-            # "SWE-1"
-            # "THA-0"
-            # "TUR-0"
-            # "VIE-1"
             "adguard-cookies"
             "adguard-generic"
             # "adguard-mobile"
@@ -181,12 +152,78 @@ in
       # ---- PREFERENCES ----
       # Set preferences shared by all profiles.
       Preferences = {
+        # Performance settings
+        "gfx.webrender.all" = true; # Force enable GPU acceleration
+        "gfx.webrender.compositor.force-enabled" = true;
+        "media.av1.enabled" = true;
+        "media.ffmpeg.vaapi.enabled" = true;
+        "media.hardware-video-decoding.force-enabled" = true;
+        "media.hls.enabled" = true;
+        "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
+        "reader.parse-on-load.force-enabled" = true;
+        "privacy.webrtc.legacyGlobalIndicator" = false;
+        # Remove trackers
+        "privacy.purge_trackers.enabled" = lock-true;
+        "privacy.trackingprotection.enabled" = lock-true;
+        "privacy.trackingprotection.fingerprinting.enabled" = lock-true;
+        "privacy.resistFingerprinting" = lock-true;
+        "privacy.trackingprotection.socialtracking.enabled" = lock-true;
+        "privacy.trackingprotection.cryptomining.enabled" = lock-true;
+        "privacy.globalprivacycontrol.enabled" = lock-true;
+        "privacy.globalprivacycontrol.functionality.enabled" = lock-true;
+        "privacy.donottrackheader.enabled" = lock-true;
+        "privacy.donottrackheader.value" = 1;
+        "privacy.query_stripping.enabled" = lock-true;
+        "privacy.query_stripping.enabled.pbmode" = lock-true;
+        # Block more unwanted stuff
+        "browser.privatebrowsing.forceMediaMemoryCache" = lock-true;
         "browser.contentblocking.category" = {
-          Value = "standard";
+          Value = "strict";
           Status = "locked";
         };
+        "browser.search.suggest.enabled" = lock-false;
+        "browser.search.suggest.enabled.private" = lock-false;
+        "privacy.popups.disable_from_plugins" = 3;
         "extensions.pocket.enabled" = lock-false;
-        "extensions.screenshots.disabled" = lock-true;
+        "browser.newtabpage.activity-stream.section.highlights.includePocket" = lock-false;
+        "browser.newtabpage.activity-stream.feeds.section.topstories" = lock-false;
+        "browser.newtabpage.activity-stream.feeds.topsites" = lock-false;
+        "browser.newtabpage.activity-stream.showSponsored" = lock-false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
+        "layout.word_select.eat_space_to_next_word" = lock-false;
+        "browser.shell.checkDefaultBrowser" = lock-false;
+        "signon.rememberSignons" = lock-false;
+        "security.insecure_connection_text.enabled" = true;
+        "security.insecure_connection_text.pbmode.enabled" = true;
+        "security.osclientcerts.autoload" = true;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "toolkit.telemetry.unified" = lock-false;
+        "toolkit.telemetry.enabled" = lock-false;
+        "toolkit.telemetry.server" = "data:,";
+        "toolkit.telemetry.archive.enabled" = lock-false;
+        "toolkit.telemetry.coverage.opt-out" = lock-true;
+        "toolkit.coverage.opt-out" = lock-true;
+        "toolkit.coverage.endpoint.base" = "";
+        "experiments.supported" = lock-false;
+        "experiments.enabled" = lock-false;
+        "experiments.manifest.uri" = "";
+        "browser.ping-centre.telemetry" = lock-false;
+        "datareporting.healthreport.uploadEnabled" = lock-false;
+        "datareporting.healthreport.service.enabled" = lock-false;
+        "datareporting.policy.dataSubmissionEnabled" = lock-false;
+        "breakpad.reportURL" = "";
+        "browser.tabs.crashReporting.sendReport" = lock-false;
+        "browser.crashReports.unsubmittedCheck.autoSubmit2" = lock-false;
+        "browser.formfill.enable" = lock-false;
+        "extensions.formautofill.addresses.enabled" = lock-false;
+        "extensions.formautofill.available" = "off";
+        "extensions.formautofill.creditCards.available" = lock-false;
+        "extensions.formautofill.creditCards.enabled" = lock-false;
+        "extensions.formautofill.heuristics.enabled" = lock-false;
+        "app.normandy.enabled" = lock-false;
+        "app.normandy.api_url" = "";
+        "dom.webnotifications.enabled" = lock-false;
+        "dom.webnotifications.serviceworker.enabled" = lock-false;
         # add global preferences here...
       };
     };
@@ -215,6 +252,123 @@ in
           # add preferences for profile_0 here...
           # "widget.wayland.fractional-scale.enabled" = lock-true;
           # "layout.css.devPixelsPerPx" = 2.0;
+        };
+        # ! REMOVE TITLE BAR
+        userChrome = ''
+          /* hides the title bar */
+          #titlebar {
+            visibility: collapse;
+          }
+
+          #TabsToolbar-customization-target {
+            visibility: collapse !important;
+          } 
+
+          /* hides the sidebar */
+          #sidebar-header {
+            visibility: collapse !important;
+          } }
+        '';
+        search = {
+          force = true; # avoid home-manager conflict
+          default = "Google";
+          privateDefault = "DuckDuckGo";
+          order = [
+            "Google"
+            "Startpage"
+            "NixOS Packages"
+            "NixOS Options"
+            "NixOS Wiki"
+            "Home Manager Options"
+            "Searx"
+            "Kagi"
+            "Ecosia"
+            "Bing"
+          ];
+          engines = {
+            "Startpage" = {
+              urls = [
+                {
+                  template = "https://www.startpage.com/sp/search?query={searchTerms}&prfe=dea8b8a2e1126185da987128a196ee5c47cdf324dce146f96b3b9157ab1f9e7166ae05d134c935eccc20f54e46222c8f1bb60faece00557b02e7a4e1fe397bc0f6750fbd3f7f580b241188&abp=-1";
+                }
+              ];
+              icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ "@sp" ];
+            };
+            "Kagi" = {
+              urls = [ { template = "https://kagi.com/search?q={searchTerms}"; } ];
+              iconUpdateURL = "https://kagi.com/favicon.ico";
+            };
+            "Ecosia" = {
+              urls = [ { template = "https://www.ecosia.org/search?method=index&q={searchTerms}"; } ];
+              iconUpdateURL = "https://www.ecosia.org/favicon.ico";
+            };
+            "Nix Packages" = {
+              urls = [
+                {
+                  template = "https://search.nixos.org/packages";
+                  params = [
+                    {
+                      name = "type";
+                      value = "packages";
+                    }
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ "@np" ];
+            };
+            "Nix Options" = {
+              urls = [
+                {
+                  template = "https://search.nixos.org/options";
+                  params = [
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+              definedAliases = [ "@no" ];
+            };
+            "NixOS Wiki" = {
+              urls = [ { template = "https://wiki.nixos.org/index.php?search={searchTerms}"; } ];
+              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000; # every day
+              definedAliases = [ "@nw" ];
+            };
+            "Home Manager Options" = {
+              urls = [ { template = "https://home-manager-options.extranix.com/?query={searchTerms}"; } ];
+              # urls = [
+              #   {
+              #     template = "https://mipmip.github.io/home-manager-option-search";
+              #     params = [
+              #       {
+              #         name = "query";
+              #         value = "{searchTerms}";
+              #       }
+              #     ];
+              #   }
+              # ];
+              iconUpdateURL = "https://avatars.githubusercontent.com/u/33221035";
+              updateInterval = 24 * 60 * 60 * 1000; # Update every day.
+              definedAliases = [ "@hm" ];
+            };
+            "Searx" = {
+              urls = [ { template = "https://searx.aicampground.com/?q={searchTerms}"; } ];
+              iconUpdateURL = "https://nixos.wiki/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000; # every day
+              definedAliases = [ "@sx" ];
+            };
+            "Bing".metaData.hidden = true;
+            # builtin engines only support specifying one additional alias
+            "Google".metaData.alias = "@g";
+          };
         };
       };
       profile_1 = {

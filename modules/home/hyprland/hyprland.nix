@@ -13,11 +13,6 @@
     wayland
     direnv
   ];
-  home.file."Pictures/wallpapers/wallpaper.png".source = ../../../wallpapers/wallpaper.png;
-  home.file."Pictures/wallpapers/others" = {
-    source = ../../../wallpapers/otherWallpaper;
-    recursive = true;
-  };
   systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
   wayland.windowManager.hyprland = {
     enable = true;

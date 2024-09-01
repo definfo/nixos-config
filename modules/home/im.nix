@@ -1,9 +1,14 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   home.packages = with pkgs; [
     qq
+    # nur.repos.linyinfeng.icalingua-plus-plus
 
-    # TODO: wait for upstream fix, use flatpak as workaround
+    # TODO: wait for upstream fix
+    # WORKAROUND: wechat-flatpak
     # (wechat-uos.override {
     # uosLicense = pkgs.fetchurl {
     # # https://github.com/NixOS/nixpkgs/pull/305929
@@ -12,8 +17,8 @@
     # };
     # })
 
-    nur.repos.mur.ayugram-desktop # 3rd-party telegram
+    telegram-desktop
 
-    # nur.repos.xddxdd.kikoplay
+    nur.repos.xddxdd.kikoplay
   ];
 }

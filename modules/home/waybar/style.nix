@@ -26,7 +26,9 @@ in
     }
 
     window#waybar {
-        background: none;
+        background-color: rgba(24, 24, 37, 0.80);
+        transition-property: background-color;
+        transition-duration: .5s;
     }
 
     #workspaces {

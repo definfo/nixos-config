@@ -1,29 +1,24 @@
-{ pkgs, username, ... }:
+{ username, ... }:
 {
   services = {
-    xserver = {
-      enable = true;
-      xkb.layout = "us";
-      # displayManager.lightdm.enable = true; # LightDM is enabled by default
-    };
-
-    # https://wiki.archlinux.org/title/Greetd
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          user = "${username}"; # Hyprland is installed only for user via home-manager!
-          command = "Hyprland"; # directly start Hyprland without login manager
-          # command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";  # start Hyprland with a TUI login manager
-        };
-      };
-    };
+    xserver.enable = true;
 
     # displayManager.autoLogin = {
     # enable = true;
     # user = "${username}";
     # };
     # displayManager.defaultSession = "hyprland";
+
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          user = "${username}"; # Hyprland is installed only for current user via home-manager!
+          command = "Hyprland"; # start Hyprland directly without a login manager
+          # command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";  # start Hyprland with a TUI login manager
+        };
+      };
+    };
 
     libinput = {
       enable = true;

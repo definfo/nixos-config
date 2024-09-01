@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-stable,
   inputs,
   username,
   host,
@@ -11,7 +12,12 @@
     useUserPackages = true;
     useGlobalPkgs = true;
     extraSpecialArgs = {
-      inherit inputs username host;
+      inherit
+        inputs
+        username
+        host
+        pkgs-stable
+        ;
     };
     users.${username} = {
       imports = if (host == "desktop") then [ ./../home/default.desktop.nix ] else [ ./../home ];

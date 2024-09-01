@@ -1,15 +1,13 @@
 {
-  description = "Definfo's NixOS configuration";
+  description = "FrostPhoenix's nixos configuration";
 
   inputs = {
     nixos-hardware.url = "github:definfo/nixos-hardware/master";
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nur.url = "github:nix-community/NUR";
 
     hypr-contrib.url = "github:hyprwm/contrib";
-
     hyprpicker.url = "github:hyprwm/hyprpicker";
 
     alejandra.url = "github:kamadorueda/alejandra/3.0.0";
@@ -24,6 +22,11 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -49,15 +52,19 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      nixpkgs-stable,
+      ...
+    }@inputs:
     let
-      username = "USERNAME";
+      username = "USERNAME"; # TODO: set username
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
+      pkgs-stable = import nixpkgs-stable {
         inherit system;
         config.allowUnfree = true;
       };
-      lib = nixpkgs.lib;
     in
     {
       nixosConfigurations = {
@@ -66,15 +73,27 @@
           modules = [ (import ./hosts/desktop) ];
           specialArgs = {
             host = "desktop";
-            inherit self inputs username;
+            inherit
+              self
+              inputs
+              username
+              pkgs-stable
+              ;
           };
         };
         laptop = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ (import ./hosts/laptop) ];
+          modules = [
+            (import ./hosts/laptop)
+          ];
           specialArgs = {
             host = "laptop";
-            inherit self inputs username;
+            inherit
+              self
+              inputs
+              username
+              pkgs-stable
+              ;
           };
         };
         vm = nixpkgs.lib.nixosSystem {
@@ -82,7 +101,12 @@
           modules = [ (import ./hosts/vm) ];
           specialArgs = {
             host = "vm";
-            inherit self inputs username;
+            inherit
+              self
+              inputs
+              username
+              pkgs-stable
+              ;
           };
         };
       };

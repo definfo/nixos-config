@@ -22,14 +22,20 @@
       };
 
       cmd_duration = {
-        format = "[󰔛 $duration]($style)";
+        format = "[]($style)[[󰔚 ](bg:#161821 fg:#d4c097 bold)$duration](bg:#161821 fg:#BBC3DF)[ ]($style)";
         disabled = false;
-        style = "bg:none fg:#f9e2af";
-        show_notifications = false;
-        min_time_to_notify = 60000;
+        style = "bg:none fg:#161821";
       };
 
+      # directory.substitutions = {
+      # "~" = "󰋞";
+      # "Documents" = " ";
+      # "Downloads" = " ";
+      # "Music" = " ";
+      # "Pictures" = " ";
+      # };
+
       palette = "catppuccin_mocha";
-    } // builtins.fromTOML (builtins.readFile "${inputs.catppuccin-starship}/palettes/mocha.toml");
+    } // builtins.fromTOML (builtins.readFile "${inputs.catppuccin-starship}/themes/mocha.toml");
   };
 }

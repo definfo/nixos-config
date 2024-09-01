@@ -35,9 +35,9 @@
           tg = [ "com.ayugram.desktop.desktop" ];
           browser = [ "firefox.desktop" ];
           editor = [
-            "${codeApp}"
             "nvim.desktop"
             "Helix.desktop"
+            "${codeApp}"
             "micro.desktop"
           ];
           pdfReader = [

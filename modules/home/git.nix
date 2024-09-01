@@ -14,7 +14,7 @@
     extraConfig = {
       init.defaultBranch = "main";
       credential.helper = "store";
-      core.editor = "vim";
+      core.editor = "hx";
       color.ui = "true";
     };
 
@@ -30,8 +30,6 @@
   programs.git-cliff = {
     enable = true;
   };
-
-  # home.packages = [ pkgs.gh pkgs.git-lfs ];
 
   # home.sessionVariables.GITHUB_TOKEN = ""; # TODO : gh auth
   programs.gh = {

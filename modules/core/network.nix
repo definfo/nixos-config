@@ -14,7 +14,7 @@
     wireless = {
       enable = true;
       networks."SJTU" = {
-        # TODO: manually replace jaccount_{id,password} below
+        # TODO: manually fill in jaccount_{id,password} below
         auth = ''
           key_mgmt=WPA-EAP
           eap=PEAP

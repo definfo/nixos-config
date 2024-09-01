@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   programs.vscode = {
     enable = true;
@@ -20,12 +20,11 @@
           "--password-store=gnome" # use gnome-keyring as password store
         ];
       }).overrideAttrs
-        (oldAttrs: rec {
+        (oldAttrs: {
           # Use VSCode Insiders to fix crash: https://github.com/NixOS/nixpkgs/issues/246509
           src = builtins.fetchTarball {
             url = "https://update.code.visualstudio.com/latest/linux-x64/insider";
-            # TODO: manually fill in sha256 if mismatch
-            sha256 = "1xr3byinhdh2hvpw6w7z7if7p3a3zknl58y9qawh4p2cmi30l2n9";
+            sha256 = "1mrmfljbr0r3abcn2z484aggvbbp96bqcskj1cmsd0r8jb23xic1";
           };
           version = "latest";
         });
@@ -48,7 +47,7 @@
       ms-python.vscode-pylance # lsp
       ms-python.debugpy # debugger
       ms-python.black-formatter # formatter
-      # matangover.mypy # linter
+      matangover.mypy # linter
 
       # C/C++
       ms-vscode.cpptools
@@ -87,8 +86,6 @@
       # i18n
       ms-ceintl.vscode-language-pack-zh-hans
     ];
-    # ! ONLY FOR REFERENCE, DO NOT UNCOMMENT
-    # Use Accounts - Settings Sync to save settings
     # userSettings = {
     # "update.mode" = "none";
     # "extensions.autoUpdate" = false; # This stuff fixes vscode freaking out when theres an update
@@ -135,6 +132,7 @@
     # "asvetliakov.vscode-neovim" = 1;
     # };
     # "direnv.restart.automatic" = true;
+    # "wakatime.apiKey" = "";
     # };
     # Keybindings
     # keybindings = [

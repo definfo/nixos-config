@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  time.timeZone = "Asia/Shanghai";
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings =
@@ -29,7 +30,7 @@
     fcitx5.waylandFrontend = true; # NOT to set GTK_IM_MODULE=fcitx
     fcitx5.addons = with pkgs; [
       fcitx5-configtool
-      fcitx5-chinese-addons
+      # fcitx5-chinese-addons
       (fcitx5-rime.override {
         rimeDataPkgs = with pkgs.nur.repos.linyinfeng.rimePackages; withRimeDeps [ rime-ice ];
       })

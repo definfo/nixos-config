@@ -103,11 +103,23 @@
             "command": "swaylock"
           },
           {
+            "label": "⏾ Suspend",
+            "command": "systemctl suspend"
+          },
+          {
+            "label": "⏾💤 Suspend-Then-Hibernate",
+            "command": "systemctl suspend-then-hibernate"
+          },
+          {
+            "label": "💤 Hibernate",
+            "command": "systemctl suspend"
+          },
+          {
             "label": "  Reboot",
             "command": "systemctl reboot"
           },
           {
-            "label": "  Shut down",
+            "label": "⏼  Shut down",
             "command": "systemctl poweroff"
           }
         ]

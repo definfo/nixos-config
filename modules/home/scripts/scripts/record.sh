@@ -6,7 +6,7 @@ TMP_MP4_FILE="/tmp/recording.mp4"
 TMP_GIF_RESULT="/tmp/gif_result"
 APP_NAME="Recorder"
 
-# TODO: modify audio device according to [LC_ALL=C pactl list sources | rg alsa.output | rg Name ]
+# TODO: should modify audio device according to [pactl list sources | rg alsa.output | rg Name]
 AUDIO_DEVICE="alsa_output.pci-0000_00_1f.3.analog-stereo.monitor"
 
 OUT_DIR="$HOME/Videos"

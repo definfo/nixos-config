@@ -19,16 +19,23 @@
   boot.loader = {
     grub = {
       enable = true;
-      device = lib.mkDefault "nodev";
+      device = "nodev";
       efiSupport = true;
       # efiInstallAsRemovable = true;
       useOSProber = lib.mkDefault true;
+      # Enable Windows boot option
+      # extraEntries = ''
+      # menuentry "Windows" {
+      # search --file --no-floppy --set=root /EFI/Microsoft/Boot/bootmgfw.efi
+      # chainloader (''${root})/EFI/Microsoft/Boot/bootmgfw.efi
+      # }
+      # '';
       configurationLimit = 10;
     };
     # https://github.com/vinceliuice/grub2-themes
     grub2-theme = {
       enable = true;
-      # screen = "4k";
+      # screen = "4k"; # TODO: select screen resolution
       theme = "vimix";
       icon = "color";
       footer = true;

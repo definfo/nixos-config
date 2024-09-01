@@ -2,13 +2,17 @@
 {
   wayland.windowManager.hyprland = {
     settings = {
-      # TODO: fill in monitor desc according to [hyprctl monitors] and [xrandr --verbose]
+      # read monitor specs from [hyprctl monitors] and [xrandr --verbose]
       monitor = [
-        "desc:Acer Technologies XV275K P3 13330185E4HA1, 3840x2160@144, 0x0, 2"
+        "desc:BOE 0x0A0B, preferred, 0x0, 2"
+        "desc:Acer Technologies XV275K P3 13330185E4HA1, 3840x2160@144, 1280x0, 2"
         ", preferred, auto, auto"
       ];
 
-      workspace = [ "7, monitor:desc:Acer Technologies XV275K P3 13330185E4HA1, default:true" ];
+      workspace = [
+        "6, monitor:desc:BOE 0x0A0B, default:true"
+        "7, monitor:desc:Acer Technologies XV275K P3 13330185E4HA1"
+      ];
 
       # autostart
       exec-once = [
@@ -142,7 +146,7 @@
         "$mainMod, Return, exec, kitty"
         "ALT, Return, exec, kitty --title float_kitty"
         "$mainMod SHIFT, Return, exec, kitty --start-as=fullscreen -o 'font_size=16'"
-        "$mainMod, B, exec, hyprctl dispatch exec '[workspace 1 silent] floorp'"
+        "$mainMod, B, exec, hyprctl dispatch exec '[workspace 1 silent] firefox'"
         "$mainMod, Q, killactive,"
         "$mainMod, F, fullscreen, 0"
         "$mainMod SHIFT, F, fullscreen, 1"
@@ -161,8 +165,8 @@
         "$mainMod SHIFT, W, exec, vm-start"
 
         # screenshot
-        "$mainMod SHIFT, S, exec, grimblast --notify --cursor --freeze save area ~/Pictures/$(date +'%Y-%m-%d-At-%Ih%Mm%Ss').png"
-        "$mainMod SHIFT, A, exec, grimblast --notify --cursor --freeze copy area"
+        "$mainMod SHIFT, S, exec, grimblast --notify --freeze save area ~/Pictures/$(date +'%Y-%m-%d-At-%Ih%Mm%Ss').png"
+        "$mainMod SHIFT, A, exec, grimblast --notify --freeze copy area"
 
         # switch focus
         "$mainMod, left, movefocus, l"
@@ -248,8 +252,6 @@
         "float,title:^(float_kitty)$"
         "center,title:^(float_kitty)$"
         "size 950 600,title:^(float_kitty)$"
-        "float,audacious"
-        "workspace 8 silent, audacious"
         # "pin,wofi"
         # "float,wofi"
         # "noborder,wofi"
@@ -296,6 +298,9 @@
         "float,title:^(branchdialog)$"
         "float,title:^(Confirm to replace files)$"
         "float,title:^(File Operation Progress)$"
+        "noborder,class:^(io.github.waylyrics.Waylyrics)$"
+        "float,class:^(io.github.waylyrics.Waylyrics)$"
+        # "pin,class:^(io.github.waylyrics.Waylyrics)$"
         # "float,class:^(QQ)$"
 
         "opacity 0.0 override,class:^(xwaylandvideobridge)$"

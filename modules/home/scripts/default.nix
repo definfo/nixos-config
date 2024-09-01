@@ -30,6 +30,8 @@ let
   ascii = pkgs.writeScriptBin "ascii" (builtins.readFile ./scripts/ascii.sh);
 
   record = pkgs.writeScriptBin "record" (builtins.readFile ./scripts/record.sh);
+
+  obs-v4l = pkgs.writeScriptBin "obs-v4l" (builtins.readFile ./scripts/obs-v4l.sh);
 in
 {
   home.packages = with pkgs; [
@@ -57,5 +59,7 @@ in
     ascii
 
     record
+
+    obs-v4l
   ];
 }

@@ -59,6 +59,8 @@
           "3" = [ ];
           "4" = [ ];
           "5" = [ ];
+          "6" = [ ];
+          "7" = [ ];
         };
       };
       memory = {
@@ -87,11 +89,12 @@
         format-icons = {
           "alsa_output.pci-0000_00_1f.3.analog-stereo" = " ";
           "alsa_output.pci-0000_00_1f.3.analog-stereo-muted" = " ";
-          headphone = " ";
-          # phone = " ";
-          # phone-muted = " ";
-          # portable = " ";
-          # car = " ";
+          "alsa_output.usb-E1DA_E1DA__9038SG3_PCM32_384_DSD256_CTUA181119A-00.pro-output-0" = "🎶";
+          headphone = "";
+          # phone = "";
+          # phone-muted = "";
+          # portable = "";
+          # car = "";
           default = [
             ""
             ""
@@ -99,7 +102,7 @@
         };
         scroll-step = 5;
         on-click = "pamixer -t";
-        on-right-click = "pavucontrol";
+        on-click-right = "pavucontrol";
       };
       network = {
         format-wifi = "  {signalStrength}%";

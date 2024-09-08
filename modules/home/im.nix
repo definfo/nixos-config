@@ -7,7 +7,7 @@
     qq
     # nur.repos.linyinfeng.icalingua-plus-plus
 
-    # TODO: wait for upstream fix
+    # FIXME: wait for upstream fix
     # WORKAROUND: wechat-flatpak
     # (wechat-uos.override {
     # uosLicense = pkgs.fetchurl {

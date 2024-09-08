@@ -363,7 +363,9 @@ Mouse binding
 
 3. **Install script**
 
-   > First make sure to read the install script, it isn't long
+   > First make sure to read the install script, it isn't long.
+   
+   > AND also make sure to check out all "TODO" configuration by `rg TODO` before executing the following script.
 
    Execute and follow the installation script :
 
@@ -371,7 +373,7 @@ Mouse binding
    ./install.sh
    ```
 
-   > You will need to change the git account yourself in modules/home/git.nix
+   > You will need to change the git account yourself in `modules/home/git.nix`
 
    ```
       programs.git = {
@@ -385,7 +387,7 @@ Mouse binding
       home.sessionVariables.GITHUB_TOKEN = "";
    ```
 
-   > Edit modules/core/network.nix for SJTU Wi-Fi authentication, see [wpa_supplicant](https://nixos.wiki/wiki/Wpa_supplicant) for switching network
+   > Edit `modules/core/network.nix` for SJTU Wi-Fi authentication, see [wpa_supplicant](https://nixos.wiki/wiki/Wpa_supplicant) for switching network
 
    ```
       wireless.networks."SJTU" = {
@@ -396,6 +398,19 @@ Mouse binding
         '';
         ...
       };
+   ```
+   
+   > Manually fill in subscription url(s) in `modules/core/mihomo/config.yaml`
+
+   ```
+      # TODO : url 里填写自己的订阅,名称不能重复
+      proxy-providers:
+         provider1:
+         <<: *p
+         url: "<sub-url1>"
+      provider2:
+         <<: *p
+         url: "<sub-url2>"
    ```
 
 4. **Reboot**
